@@ -3,11 +3,11 @@ services:
   tg_bot:
     build: .
     depends_on:
-      - db
+      - tg_database
 #    command: sh -c 'sleep 35'
     restart: on-failure
 
-  db:
+  tg_database:
     image: postgres
     restart: always
     environment:
@@ -26,5 +26,5 @@ volumes:
   pgdata:
 
 networks:
-  db:
+  tg_database:
     driver: bridge
