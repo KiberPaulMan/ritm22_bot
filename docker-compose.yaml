@@ -1,0 +1,27 @@
+services:
+
+  tg_bot:
+    build: .
+    depends_on:
+      - db
+#    command: sh -c 'sleep 35'
+    restart: on-failure
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${PG_DB}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata:
+
+networks:
+  db:
+    driver: bridge
