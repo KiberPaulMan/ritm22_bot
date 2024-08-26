@@ -17,7 +17,10 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5433:5433"
+    expose:
+      - "5433"
+    command: -p 5433
 
 volumes:
   pgdata:
