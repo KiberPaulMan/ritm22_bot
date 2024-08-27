@@ -103,7 +103,10 @@ async def show_timetable_for_period(message: types.Message):
         input_data = message.text.split('-')
 
         date_start = input_data[0].strip()
+        date_start = f'{date_start[6:]}-{date_start[3:5]}-{date_start[:2]}'
+        
         date_end = input_data[1].strip()
+        date_end = f'{date_end[6:]}-{date_end[3:5]}-{date_end[:2]}'
 
         output_data = parse.show_week_timetable(date_start, date_end)
         if output_data:
