@@ -2,13 +2,14 @@ services:
 
   tg_bot:
     build: .
+    container_name: ritm22_tg_bot
     depends_on:
       - tg_database
-#    command: sh -c 'sleep 35'
     restart: on-failure
 
   tg_database:
     image: postgres
+    container_name: ritm22_db
     restart: always
     environment:
       POSTGRES_DB: ${PG_DB}
