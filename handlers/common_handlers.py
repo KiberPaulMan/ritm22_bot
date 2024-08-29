@@ -94,8 +94,11 @@ async def get_dates_for_timetable_for_period(callback: types.CallbackQuery):
         await callback.message.answer('<b>Введите период дат в следующем формате:\n15.01.2000 - 19.01.2000</b>')
 
 
+import re
+
+
 # Show timetable for period
-@handlers_router.message(F.text.regexp(r'\d{2}.\d{2}.\d{4} - \d{2}.\d{2}.\d{4}'))
+@handlers_router.message(F.text.regexp(re.compile(r'\d{2}.\d{2}.\d{4} - \d{2}.\d{2}.\d{4}')))
 async def show_timetable_for_period(message: types.Message):
     if message.from_user.id not in white_users_id:
         await message.answer(DENY_ACCESS_MESSAGE)
@@ -104,15 +107,23 @@ async def show_timetable_for_period(message: types.Message):
 
         date_start = input_data[0].strip()
         date_start = f'{date_start[6:]}-{date_start[3:5]}-{date_start[:2]}'
-        
+
         date_end = input_data[1].strip()
         date_end = f'{date_end[6:]}-{date_end[3:5]}-{date_end[:2]}'
+        print(f'{date_start=} {date_end=}')
 
         output_data = parse.show_week_timetable(date_start, date_end)
+        print(f'{output_data}')
+
         if output_data:
             await message.answer(output_data)
         else:
             await message.answer('<b>На данной неделе занятий нет!</b>')
+
+
+@handlers_router.message(F.text)
+async def show_timetable_for_period(message: types.Message):
+    return message.answer(message.text)
 
 
 # Process edit lesson
@@ -241,7 +252,7 @@ async def process_select_weekday_via_command(message: types.Message, state: FSMC
     if message.from_user.id not in white_users_id:
         await message.answer(DENY_ACCESS_MESSAGE)
     else:
-        await message.answer('<b>Выберите день недели:</b>', reply_markup=reply.week_days_kb1)
+        await message.answer('<b>Выберите день недели:</b>', reply_markup=reply.get_inline_keyboard())
         await state.update_data(date=F.data)
 
 
@@ -251,7 +262,7 @@ async def process_select_weekday(callback: types.CallbackQuery, state: FSMContex
     if callback.from_user.id not in white_users_id:
         await callback.message.answer(DENY_ACCESS_MESSAGE)
     else:
-        await callback.message.answer('<b>Выберите день недели:</b>', reply_markup=reply.week_days_kb1)
+        await callback.message.answer('<b>Выберите день недели:</b>', reply_markup=reply.get_inline_keyboard())
         await state.update_data(date=F.data)
 
 
