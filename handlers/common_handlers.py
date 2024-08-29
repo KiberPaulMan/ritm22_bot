@@ -121,11 +121,6 @@ async def show_timetable_for_period(message: types.Message):
             await message.answer('<b>На данной неделе занятий нет!</b>')
 
 
-@handlers_router.message(F.text)
-async def show_timetable_for_period(message: types.Message):
-    return message.answer(message.text)
-
-
 # Process edit lesson
 @handlers_router.callback_query(F.data == 'edit_lesson')
 async def process_edit_lesson_1(callback: types.CallbackQuery, state: FSMContext):
