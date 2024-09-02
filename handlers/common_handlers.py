@@ -246,7 +246,7 @@ async def process_select_weekday_via_command(message: types.Message, state: FSMC
         await message.answer(DENY_ACCESS_MESSAGE)
     else:
         await message.answer('<b>Выберите день недели:</b>', reply_markup=reply.get_inline_keyboard())
-        await state.update_data(date=F.data)
+        # await state.update_data(date=F.data)
 
 
 # Choose week day (week timetable)
@@ -256,7 +256,7 @@ async def process_select_weekday(callback: types.CallbackQuery, state: FSMContex
         await callback.message.answer(DENY_ACCESS_MESSAGE)
     else:
         await callback.message.answer('<b>Выберите день недели:</b>', reply_markup=reply.get_inline_keyboard())
-        await state.update_data(date=F.data)
+        # await state.update_data(date=F.data)
 
 
 # Create, edit or delete lesson
