@@ -50,14 +50,7 @@ def show_week_timetable(date_start, date_end):
         output_data += f'{key}:\n'
 
         for value in values:
-            if 'свободно' in value:
-                output_data += f'\t\t\t<font color="#8f6bf0">{value}</font>\n'
-            elif 'конец рабочего дня' in value:
-                output_data += f'\t\t\t<font color="#f3eb85">{value}</font>\n'
-            elif 'перерыв' in value:
-                output_data += f'\t\t\t<font color="#f16ee2">{value}</font>\n'
-            else:
-                output_data += f'\t\t\t{value}\n'
+            output_data += f'\t\t\t{value}\n'
         output_data += '\n\n'
 
     return output_data
